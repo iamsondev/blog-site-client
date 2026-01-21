@@ -1,5 +1,5 @@
 export default async function AboutPage() {
-  await new Promise((resolve) => setInterval(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   throw new Error("Something went wrong");
   return (
     <div>

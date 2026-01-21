@@ -66,8 +66,8 @@ const Navbar = ({
       url: "/blogs",
     },
     {
-      title: "About",
-      url: "/about",
+      title: "Dashboard",
+      url: "/dashboard",
     },
   ],
   auth = {
