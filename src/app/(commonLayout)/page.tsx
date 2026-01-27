@@ -1,12 +1,25 @@
-import { Button } from "@/components/ui/button";
+import BlogCard from "@/components/modules/homepage/BlogCard";
 import { blogServices } from "@/services/blog.services";
+import { BlogPost } from "@/types";
 
 export default async function Home() {
-  const { data } = await blogServices.getBlogPost();
-  console.log(data);
+  const { data } = await blogServices.getBlogPost(
+    {
+      isFeatured: false,
+      search: "something",
+    },
+    {
+      cache: "no-cache",
+    },
+  );
+
+  const posts = data?.data;
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <Button>click me</Button>
+    <div>
+      {posts?.map((post: BlogPost) => (
+        <BlogCard key={post.id} post={post} />
+      ))}
     </div>
   );
 }
