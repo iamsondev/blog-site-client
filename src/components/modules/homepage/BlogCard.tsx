@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function BlogCard({ post }: { post: BlogPost }) {
   return (
-    <Card className="group grid grid-cols-6 h-full  overflow-hidden border border-slate-200 dark:border-slate-800 bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl mx-auto px-5 mt-5">
+    <Card className="group h-full  overflow-hidden border border-slate-200 dark:border-slate-800 bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl mx-auto px-5 mt-5">
       {/* Image Section with Overlay */}
       <div className="relative aspect-video w-full overflow-hidden">
         {post.thumbnail ? (
@@ -39,7 +39,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
           <Clock size={12} />
           <span>January 27, 2026</span> {/* dynamic date use: post.createdAt */}
         </div>
-        <Link href={`/blog/${post.id}`}>
+        <Link href={`/blogs/${post.id}`}>
           <CardTitle className="line-clamp-2 text-xl font-bold leading-tight transition-colors hover:text-primary">
             {post.title}
           </CardTitle>
@@ -62,7 +62,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
           </span>
         </div>
         <Link
-          href={`/blog/${post.id}`}
+          href={`/blogs/${post.id}`}
           className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
         >
           Read More

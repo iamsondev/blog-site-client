@@ -6,7 +6,6 @@ export default async function Home() {
   const { data } = await blogServices.getBlogPost(
     {
       isFeatured: false,
-      search: "something",
     },
     {
       cache: "no-cache",
@@ -16,7 +15,7 @@ export default async function Home() {
   const posts = data?.data;
 
   return (
-    <div>
+    <div className="grid grid-cols-3 gap-2.5">
       {posts?.map((post: BlogPost) => (
         <BlogCard key={post.id} post={post} />
       ))}
