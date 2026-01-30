@@ -1,6 +1,6 @@
 import { blogServices } from "@/services/blog.services";
 import Image from "next/image";
-import { Calendar, Eye } from "lucide-react"; // আইকন ব্যবহারের জন্য
+import { Calendar, Eye } from "lucide-react";
 import { BlogPost } from "@/types";
 
 export const dynamicParams = false;
