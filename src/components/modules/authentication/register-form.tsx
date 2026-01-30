@@ -8,15 +8,29 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useForm } from "@tanstack/react-form";
+import * as z from "zod";
+const formSchema = z.object({
+  name: z.string().min(1, "This field is required"),
+  password: z.string().min(8, "at least 8 character needed"),
+  email: z.email(),
+});
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const form = useForm({
     defaultValues: {
       name: "",
       email: "",
       password: "",
+    },
+    validators: {
+      onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
       console.log(value, "submit clicked");
@@ -42,6 +56,8 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             <form.Field
               name="name"
               children={(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
                 return (
                   <Field>
                     <FieldLabel htmlFor={field.name}>Name</FieldLabel>
@@ -52,6 +68,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                       value={field.state.value}
                       onChange={(e) => field.handleChange(e.target.value)}
                     />
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
                   </Field>
                 );
               }}
@@ -59,8 +78,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             <form.Field
               name="email"
               children={(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
                 return (
-                  <Field>
+                  <Field data-invalid={isInvalid}>
                     <FieldLabel htmlFor={field.name}>Email</FieldLabel>
                     <Input
                       type="email"
@@ -69,6 +90,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                       value={field.state.value}
                       onChange={(e) => field.handleChange(e.target.value)}
                     />
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
                   </Field>
                 );
               }}
@@ -76,6 +100,8 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             <form.Field
               name="password"
               children={(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
                 return (
                   <Field>
                     <FieldLabel htmlFor={field.name}>Password</FieldLabel>
@@ -86,6 +112,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                       value={field.state.value}
                       onChange={(e) => field.handleChange(e.target.value)}
                     />
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
                   </Field>
                 );
               }}
