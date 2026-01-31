@@ -15,7 +15,9 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
+import { toast } from "sonner";
 import * as z from "zod";
 const formSchema = z.object({
   name: z.string().min(1, "This field is required"),
@@ -33,9 +35,26 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value, "submit clicked");
+      const toastId = toast.loading("creating user");
+      try {
+        const { data, error } = await authClient.signUp.email(value);
+        if (error) {
+          toast.error(error.message, { id: toastId });
+          return;
+        }
+        toast.success("user created successfully", { id: toastId });
+      } catch (err) {
+        toast.error("Something Went Wrong, please try again", { id: toastId });
+      }
     },
   });
+  const handleGoogleLogin = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "http://localhost:3000",
+    });
+    console.log(data);
+  };
   return (
     <Card {...props}>
       <CardHeader>
@@ -119,12 +138,19 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 );
               }}
             />
+            <Button
+              onClick={() => handleGoogleLogin()}
+              variant="outline"
+              type="button"
+            >
+              Continue with Google
+            </Button>
           </FieldGroup>
         </form>
       </CardContent>
       <CardFooter className="flex justify-end">
         <Button form="login-form" type="submit">
-          Submit
+          Register
         </Button>
       </CardFooter>
     </Card>
