@@ -1,5 +1,4 @@
 import { CreateBlogFormClient } from "@/components/modules/user/createBlog/createBlogFormClient";
-import CreateBlogForm from "@/components/modules/user/createBlog/createBlogFormServer";
 import { blogServices } from "@/services/blog.services";
 import { BlogPost } from "@/types";
 

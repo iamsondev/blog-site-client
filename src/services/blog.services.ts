@@ -1,6 +1,5 @@
 import { env } from "@/env";
 import { BlogData } from "@/types";
-import { error } from "console";
 import { cookies } from "next/headers";
 
 const API_URL = env.API_URL;
@@ -12,6 +11,7 @@ interface serviceOptions {
 interface getBlogsParams {
   isFeatured?: boolean;
   search?: string;
+  page?: string;
 }
 
 export const blogServices = {
