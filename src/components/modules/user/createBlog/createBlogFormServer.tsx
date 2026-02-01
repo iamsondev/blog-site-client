@@ -11,6 +11,7 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { env } from "@/env";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -41,8 +42,8 @@ export default function CreateBlogForm() {
       },
       body: JSON.stringify(blogData),
     });
-    if (res.status) {
-      redirect("/dashboard/create-blog?success");
+    if (res.ok) {
+      revalidateTag("blogpost", "max");
     }
   };
   return (
